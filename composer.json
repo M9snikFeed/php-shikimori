@@ -1,6 +1,6 @@
 {
     "name": "m9snikfeed/php-shikimori",
-    "description": "Package for working with Shikimori api",
+    "description": "API implementation for shikimori.one",
     "type": "library",
     "require": {
         "php": ">=8.1",

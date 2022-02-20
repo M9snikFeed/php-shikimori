@@ -1,0 +1,24 @@
+{
+    "name": "m9snikfeed/php-shikimori",
+    "description": "Package for working with Shikimori api",
+    "type": "library",
+    "require": {
+        "php": ">=8.1",
+        "symfony/http-client": "^6.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "M9snikfeed\\PhpShikimori\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "M9snikFeed",
+            "email": "den4ic2001@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

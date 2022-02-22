@@ -25,9 +25,6 @@ class ShikimoriApiRequest
      */
     private HttpClientInterface $СurlHttpClient;
 
-    protected const CONNECTION_TIMEOUT = 10;
-    private const HTTP_STATUS_CODE_OK = 200;
-
     /**
      * @param string $host
      * @param string $userAgent

@@ -14,7 +14,10 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class AnimeTest extends TestCase
 {
-    private $client;
+    /**
+     * @var ShikimoriApiClient
+     */
+    private ShikimoriApiClient $client;
 
     public function setUp(): void
     {
@@ -28,9 +31,10 @@ class AnimeTest extends TestCase
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws \m9snikfeed\phpShikimori\exceptions\ApiRequestException
-     * @covers ShikimoriApiClient:anime
+     * @covers ShikimoriApiClient:anime()
      */
-    public function testGetAnime(){
+    public function testGetAnime()
+    {
         $anime = $this->client->anime()->get(1);
         $this->assertInstanceOf(Anime::class, $anime);
         $this->assertInstanceOf(Image::class, $anime->getImage());
@@ -50,19 +54,19 @@ class AnimeTest extends TestCase
         $this->assertIsArray($anime->getJapanese());
     }
 
-
     /**
      * @return void
      * @throws DecodingExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @covers \M9snikfeed\PhpShikimori\Actions\Anime:get()
      */
-    public function testNotFound(){
+    public function testAnimeNotFound()
+    {
         try {
             $anime = $this->client->anime()->get(2);
-        }
-        catch (ApiRequestException $e) {
+        } catch (ApiRequestException $e) {
             $this->assertSame($e->getCode(), 404);
         }
     }

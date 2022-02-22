@@ -3,6 +3,7 @@
 namespace M9snikfeed\PhpShikimori\Client;
 
 use M9snikfeed\PhpShikimori\Actions\Anime;
+use M9snikfeed\PhpShikimori\Actions\Users;
 
 class ShikimoriApiClient
 {
@@ -71,7 +72,7 @@ class ShikimoriApiClient
 
     private $userRates;
 
-    private $users;
+    private Users $users;
 
     private $videos;
 
@@ -90,5 +91,21 @@ class ShikimoriApiClient
     public function anime(): Anime
     {
         return $this->anime = new Anime($this->request);
+    }
+
+    /**
+     * @return Users
+     */
+    public function users(): Users
+    {
+        return $this->users = new Users($this->request);
+    }
+
+    /**
+     * @param string $accessToken
+     */
+    public function setAccessToken(string $accessToken): void
+    {
+        $this->request->setAccessToken($accessToken);
     }
 }

@@ -18,17 +18,9 @@ class Anime extends BaseAction
 {
     use Parser;
 
-    /**
-     * @var ShikimoriApiRequest
-     */
-    private ShikimoriApiRequest $request;
-
-    /**
-     * @param ShikimoriApiRequest $request
-     */
     public function __construct(ShikimoriApiRequest $request)
     {
-        $this->request = $request;
+        parent::__construct($request);
     }
 
     /**

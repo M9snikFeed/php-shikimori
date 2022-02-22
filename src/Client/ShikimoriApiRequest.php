@@ -3,6 +3,7 @@
 namespace M9snikfeed\PhpShikimori\Client;
 
 use M9snikfeed\PhpShikimori\Exceptions\ApiRequestException;
+use M9snikfeed\PhpShikimori\Exceptions\ShikimoriUnauthorizedException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -26,6 +27,11 @@ class ShikimoriApiRequest
     private HttpClientInterface $СurlHttpClient;
 
     /**
+     * @var string
+     */
+    private string $accessToken = '';
+
+    /**
      * @param string $host
      * @param string $userAgent
      */
@@ -40,6 +46,7 @@ class ShikimoriApiRequest
      * @param string $path
      * @param string $method
      * @param array $params
+     * @param string|null $accessToken
      * @return ResponseInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
@@ -51,6 +58,7 @@ class ShikimoriApiRequest
                 'headers' =>
                     [
                         'User-Agent' => $this->userAgent,
+                        'Authorization' => 'Bearer ' . $this->accessToken
                     ]
             ]
         )->request(
@@ -66,28 +74,52 @@ class ShikimoriApiRequest
      * Get request.
      * @param $path
      * @param array $params
+     * @param string|null $accessToken
      * @return array
-     * @throws \m9snikfeed\phpShikimori\exceptions\ApiRequestException
+     * @throws ApiRequestException
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws ShikimoriUnauthorizedException
      */
-    public function get($path, array $params = []): array
+    public function get($path, array $params = [])
     {
         try {
             return $this->send($path, params: $params)->toArray();
         } catch (ClientExceptionInterface $ex) {
+            if ($ex->getCode() === 401){
+                throw new ShikimoriUnauthorizedException('Unauthorized, accessToken is missing or invalid');
+            }
             throw new ApiRequestException($ex->getMessage(), $ex->getCode());
         }
     }
 
     /**
      * Post request
-     * @return void
+     * @param string $path
+     * @param array|null $params
+     * @param string|null $accessToken
+     * @return string
+     * @throws ApiRequestException
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function post()
+    public function post(string $path, ?array $params)
     {
+        try {
+            return $this->send($path, 'POST', $params)->getContent();
+        } catch (ClientExceptionInterface $ex) {
+            throw new ApiRequestException($ex->getMessage(), $ex->getCode());
+        }
+    }
 
+    /**
+     * @param string $accessToken
+     */
+    public function setAccessToken(string $accessToken): void
+    {
+        $this->accessToken = $accessToken;
     }
 }

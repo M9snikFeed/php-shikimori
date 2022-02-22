@@ -2,10 +2,24 @@
 
 namespace M9snikfeed\PhpShikimori\Actions;
 
+use M9snikfeed\PhpShikimori\Client\ShikimoriApiRequest;
 use phpDocumentor\Reflection\Types\ClassString;
 
 class BaseAction
 {
+    /**
+     * @var ShikimoriApiRequest
+     */
+    protected ShikimoriApiRequest $request;
+
+    /**
+     * @param ShikimoriApiRequest $request
+     */
+    public function __construct(ShikimoriApiRequest $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Formats given array of parameters for making the request.
      * @param array $params

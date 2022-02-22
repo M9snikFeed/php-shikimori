@@ -26,10 +26,19 @@ The ShikimoriApiClient constructor takes the user-agent as the first parameter.
 
 ## 4. Authorization
 
-Will be later
 
+````
+$clientId = 'IWJ-6QnQi5so_dtyHswoTOwQ07YRev3UAnc7H-OVRhM';
+$clientSecret = 'EwgBSXrBDChK7-YsqE8fQz86Ws_pwG3lAhUiyXXffqs';
+$authCodeRedirect = 'https://localhost/auth/shikimori/callback';
 
+$shikiOAuth = new ShikimoriOAuth('YukiDub.Fun');
 
+///getAuthorizationToken method will return authorization URL. After passing through it and upon successful authorization, AUTH_CODE will be issued.
+echo $shikiOAuth->setScopes(Scopes::user_rates, Scopes::comments)->getAuthorizationUrl($clientId, $authCodeRedirect));
 
-###------------------------------------
-ЗЫ: я ЗАДОЛБАЛСЯ писать это добро
+$accessToken = $shikiOAuth->getAccessAndRefreshToken($authCodeRedirect, $clientSecret, $clientId, 'AUTH_CODE');
+$apiClient = new ShikimoriApiClient('YukiDub.Fun');
+$apiClient->setAccessToken('ACCESS_TOKEN');
+var_dump($apiClient->users()->whoami($accessToken['access_token']));
+````

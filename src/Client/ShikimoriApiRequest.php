@@ -61,7 +61,7 @@ class ShikimoriApiRequest
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         }
 
-        return $request = $this->СurlHttpClient->withOptions(
+        return $this->СurlHttpClient->withOptions(
             array('headers' => $headers)
         )->request(
             $method,

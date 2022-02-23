@@ -88,23 +88,25 @@ class Anime
     /**
      * @param object $anime
      */
-    public function __construct(object $anime)
+    public function __construct(object $anime = null)
     {
-        $this->id = $anime->id;
-        $this->name = $anime->name;
-        $this->russian = $anime->russian;
-        $this->image = new Image((object) $anime->image);
-        $this->url = $anime->url;
-        $this->kind = $anime->kind;
-        $this->score = $anime->score;
-        $this->status = $anime->status;
-        $this->episodes = $anime->episodes;
-        $this->episodesAired = $anime->episodes_aired;
-        $this->airedOn = $anime->aired_on;
-        $this->rating = $anime->rating;
-        $this->english = $anime->english;
-        $this->japanese = $anime->japanese;
-        $this->releasedOn = $anime->released_on;
+        if ($anime){
+            $this->id = $anime->id;
+            $this->name = $anime->name;
+            $this->russian = $anime->russian;
+            $this->image = new Image((object) $anime->image);
+            $this->url = $anime->url;
+            $this->kind = $anime->kind;
+            $this->score = $anime->score;
+            $this->status = $anime->status;
+            $this->episodes = $anime->episodes;
+            $this->episodesAired = $anime->episodes_aired;
+            $this->airedOn = $anime->aired_on;
+            $this->rating = $anime->rating;
+            $this->english = $anime->english;
+            $this->japanese = $anime->japanese;
+            $this->releasedOn = $anime->released_on;
+        }
     }
 
     /**
@@ -225,5 +227,125 @@ class Anime
     public function getJapanese(): ?array
     {
         return $this->japanese;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string|null $russian
+     */
+    public function setRussian(?string $russian): void
+    {
+        $this->russian = $russian;
+    }
+
+    /**
+     * @param Image $image
+     */
+    public function setImage(Image $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @param string $kind
+     */
+    public function setKind(string $kind): void
+    {
+        $this->kind = $kind;
+    }
+
+    /**
+     * @param float $score
+     */
+    public function setScore(float $score): void
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @param int $episodes
+     */
+    public function setEpisodes(int $episodes): void
+    {
+        $this->episodes = $episodes;
+    }
+
+    /**
+     * @param int $episodesAired
+     */
+    public function setEpisodesAired(int $episodesAired): void
+    {
+        $this->episodesAired = $episodesAired;
+    }
+
+    /**
+     * @param string $airedOn
+     */
+    public function setAiredOn(string $airedOn): void
+    {
+        $this->airedOn = $airedOn;
+    }
+
+    /**
+     * @param string|null $releasedOn
+     */
+    public function setReleasedOn(?string $releasedOn): void
+    {
+        $this->releasedOn = $releasedOn;
+    }
+
+    /**
+     * @param string|null $rating
+     */
+    public function setRating(?string $rating): void
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * @param array|null $english
+     */
+    public function setEnglish(?array $english): void
+    {
+        $this->english = $english;
+    }
+
+    /**
+     * @param array|null $japanese
+     */
+    public function setJapanese(?array $japanese): void
+    {
+        $this->japanese = $japanese;
     }
 }

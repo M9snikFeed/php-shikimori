@@ -85,7 +85,7 @@ class ShikimoriApiRequest
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws ShikimoriUnauthorizedException
      */
-    public function get($path, array $params = [])
+    public function get($path, array $params = []): array
     {
         try {
             return $this->send($path, params: $params)->toArray();
@@ -102,16 +102,16 @@ class ShikimoriApiRequest
      * @param string $path
      * @param array|null $params
      * @param string|null $accessToken
-     * @return string
+     * @return array
      * @throws ApiRequestException
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function post(string $path, ?array $params)
+    public function post(string $path, ?array $params): array
     {
         try {
-            return $this->send($path, 'POST', $params)->getContent();
+            return $this->send($path, 'POST', $params)->toArray();
         } catch (ClientExceptionInterface $ex) {
             throw new ApiRequestException($ex->getMessage(), $ex->getCode());
         }

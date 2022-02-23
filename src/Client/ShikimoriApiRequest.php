@@ -27,9 +27,9 @@ class ShikimoriApiRequest
     private HttpClientInterface $СurlHttpClient;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private string $accessToken = '';
+    private ?string $accessToken = null;
 
     /**
      * @param string $host
@@ -53,14 +53,16 @@ class ShikimoriApiRequest
 
     public function send(string $path, string $method = "GET", array $params = []): ResponseInterface
     {
+        $headers = array(
+            'User-Agent' => $this->userAgent,
+        );
+
+        if (!is_null($this->accessToken)){
+            $headers['Authorization'] = 'Bearer ' . $this->accessToken;
+        }
+
         return $request = $this->СurlHttpClient->withOptions(
-            [
-                'headers' =>
-                    [
-                        'User-Agent' => $this->userAgent,
-                        'Authorization' => 'Bearer ' . $this->accessToken
-                    ]
-            ]
+            array('headers' => $headers)
         )->request(
             $method,
             $this->host . $path,
